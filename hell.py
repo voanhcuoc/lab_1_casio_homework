@@ -60,6 +60,15 @@ def rad():
 def deg():
     x = request.json['x']
     return { "result": math.degrees(x) }
+
+@app.route('/complex_num', methods=['POST'])
+def complex():
+    x0 = request.json['x0']
+    x1 = request.json['x1']
+    r = math.hypot(x0,x1)
+    theta = math.atan2(x1,x0)
+    result = [r, theta]
+    return { "result": result }
     
 
 app.run(port=5000)
