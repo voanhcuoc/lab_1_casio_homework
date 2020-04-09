@@ -3,7 +3,10 @@ import math
 
 app = Flask(__name__)
 
-# @app.route('/')
+@app.route('/')
+def ui():
+    return render_template('index.html')
+
 @app.route('/sin', methods=['POST'])
 def sin():
     x = request.json['x']

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator</title>
+    </head>
+    <body>
+        <label>sin: </label>
+        <input type="text" id="sin-x" />
+        =
+        <input type="text" disabled id="sin-res" />
+        <br/>
+        <label>cos: </label>
+        <input type="text" id="cos-x" />
+        =
+        <input type="text" disabled id="cos-res" />
+        <br/>
+        <label>tan: </label>
+        <input type="text" id="tan-x" />
+        =
+        <input type="text" disabled id="tan-res" />
+        <br/>
+        <script>
+            function setup(name) {
+                document.getElementById(`${name}-x`).oninput = () => {
+                    const x = parseFloat(document.getElementById(`${name}-x`).value);
+                    fetch(`/${name}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ x })
+                    })
+                        .then(res => res.json())
+                        .then(json => json.result)
+                        .then(result => {
+                            document.getElementById(`${name}-res`).value = result;
+                        })
+                        .catch(console.log);
+                };
+            };
+            setup("sin");
+            setup("cos");
+            setup("tan");
+             
+        </script>
+    </body>
+</html>
